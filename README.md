@@ -1,0 +1,73 @@
+# 💰 WALLET//Ð — points wallet
+
+![macOS](https://img.shields.io/badge/macOS-Übersicht-3ef0ff?style=flat-square&logo=apple&logoColor=white&labelColor=040914) ![Vibecoded](https://img.shields.io/badge/vibecoded-with%20Claude-ff5ad9?style=flat-square&labelColor=040914)
+
+A personal points system on your desktop. **Earn** points (Ð) for things you want to do more of, **spend** them on rewards, and **lock** some in a vault so they're saved, not spent.
+
+| File | What |
+|:--|:--|
+| `doubloons.jsx` | The widget (230 × 176, top-right by default). The file keeps its old name so WIDGET//CTL recognises it. |
+| `wallet.py` | Backend: stdlib Python, keeps the ledger |
+| `obsidian/` | My original edition, which reads the balance from my Obsidian vault ([details](obsidian)) |
+
+## Use it
+
+Tap the bottom line, type one of these, press ⏎ (Esc cancels):
+
+| You type | Effect |
+|:--|:--|
+| `+50 gym` | earn 50 Ð, note "gym" |
+| `-120 new game` | spend 120 Ð |
+| `lock 100` | move 100 Ð into the 🔒 vault (no longer spendable) |
+| `unlock 40` | take 40 Ð back out of the vault |
+| `undo` | remove the last entry |
+
+The panel shows **spendable** balance (earned − spent − locked), plus **EARNED**, **🔒 VAULT**, **STREAK** and **SPENT**.
+You can't spend or lock more than you have. **Streak** counts days in a row with at least one earning. Days roll over at **04:00**, so a late-night session still counts for the day it belongs to.
+
+[STUDY//TERM](https://github.com/SlicingReaper/study-timer-widget) pays study time in automatically: 15 Ð per full 25-minute block by default.
+
+## Data
+
+`~/Library/Application Support/STUDYTERM/standalone/data/wallet.json` holds one entry per action (`t`, `kind` earn/spend/lock/unlock, `n`, `note`). You can edit it by hand. Totals are always recalculated from the entries.
+
+## From the command line
+
+```bash
+B="$HOME/Library/Application Support/STUDYTERM/standalone/bin"
+python3 "$B/wallet.py" state                                   # JSON totals
+python3 "$B/wallet.py" add "$(printf '+20 read' | base64)"      # same syntax as the widget
+python3 "$B/wallet.py" earn 15 "$(printf 'from a script' | base64)"
+```
+
+## 🚀 Install
+
+1. Download this repo (green **Code** button → *Download ZIP*) and double-click **`install.command`**. The first time, macOS may block it: right-click → *Open*.
+   It installs [Übersicht](https://tracesof.net/uebersicht/) if you don't have it and copies `doubloons.jsx` into its widgets folder, plus `wallet.py` into `~/Library/Application Support/STUDYTERM/standalone/bin/`.
+2. Click the widget to use it. If clicks fall through to the desktop: Übersicht menu-bar icon → this widget → turn on interaction.
+
+- **Needs:** macOS 13+ · `python3` 3.8+ (run `xcode-select --install` if you don't have it)
+- **By hand:** Copy `doubloons.jsx` into Übersicht's widgets folder (menu-bar icon → *Open Widgets Folder*) and `wallet.py` into `~/Library/Application Support/STUDYTERM/standalone/bin/`.
+- **Remove:** delete `doubloons.jsx` from the widgets folder. Your data in `~/Library/Application Support/STUDYTERM/standalone/data/` stays.
+
+## 🎨 Look and position
+
+Out of the box it sits in its default spot in the cyan terminal theme. Install [**WIDGET//CTL**](https://github.com/SlicingReaper/widgetctl) to drag it anywhere on a grid and pick from 16 colour schemes × 8 styles, and to get `⌃⌥⌘W`, which hides all widgets at once.
+
+## 🧩 Part of a collection
+
+This widget is one of nine that share the same retro-terminal look, the same theming and the same show/hide hotkey. Each works on its own; together they make a desktop dashboard.
+
+| | Widget | What |
+|:-:|:--|:--|
+| 💰 | [**WALLET//Ð**](https://github.com/SlicingReaper/points-wallet-widget) ← you are here | Points wallet: earn for habits, spend on rewards, lock savings, keep a streak |
+| 🔥 | [**75//HARD**](https://github.com/SlicingReaper/75-hard-widget) | 75 Hard challenge tracker: 7 daily tasks, day counter, auto-fail on a missed day |
+| ⏱️ | [**STUDY//TERM**](https://github.com/SlicingReaper/study-timer-widget) | Study stopwatch that logs what you did, with a stats page and points |
+| ✎ | [**NOTE//PAD**](https://github.com/SlicingReaper/notepad-widget) | Checklist notes with deadline countdowns, auto-expiry and a bin |
+| “ | [**QUOTE//DAY**](https://github.com/SlicingReaper/quote-of-the-day-widget) | A new quote every midnight from a pool of 300, with likes and your own quotes |
+| ▦ | [**TETRIS//GRID**](https://github.com/SlicingReaper/tetris-widget) | Tetris on the desktop: hold, ghost piece, levels, best score |
+| ◉ | [**PONG//SOLO**](https://github.com/SlicingReaper/pong-widget) | Single-player Pong: keep the ball up, it speeds up every hit |
+| ⊞ | [**2048//TILE**](https://github.com/SlicingReaper/2048-widget) | 2048 with undo, keyboard or drag, saved between sessions |
+| 🎛️ | [**WIDGET//CTL**](https://github.com/SlicingReaper/widgetctl) | Menu-bar app that arranges and themes all the widgets, plus a ⌃⌥⌘W show/hide hotkey |
+
+**Install all of them at once:** [`vibecoded` → install-all.command](https://github.com/SlicingReaper/vibecoded) · 🤖 Vibecoded with [Claude](https://claude.ai): I designed, directed and tested it, the AI wrote most of the code.
